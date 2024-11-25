@@ -29,7 +29,11 @@ git clone https://github.com/Cahzello/Snackalyze-API.git
 ```
 npm i
 ```
-3. To run
+3. Move directory to project
+```
+cd Snackalyze-API
+```
+4. To run
 ```
 npm run dev
 ```
