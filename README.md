@@ -18,8 +18,8 @@ Receive tailored suggestions based on your dietary preferences and health goals.
 Empower your snacking journey with Snackalyze! 🍫📖
 
 ## Prerequisite
-- Git `2.40`
-- nodeJS `20.10`
+- Git `2.40 or higher`
+- nodeJS `18.00 or higher`
 ## How to run
 1. Clone this repo:
 ```
