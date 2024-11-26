@@ -5,12 +5,18 @@ const bodyParser = require("body-parser");
 
 app.use(bodyParser.json());
 
+app.get("/products", async (req, res) => {
+  const data = await fetch('https://dummyjson.com/products?limit=5')
+  .then(response => response.json());
+  res.status(200).send(data);
+});
+
 app.get("/", (req, res) => {
   res.status(200).send(`"Hello World!"`);
 });
 
 app.post("/", (req, res) => {
-  console.log({ FromRequestBody: req.body, FromParams: req.query });
+  console.log({ FromQuery: req.query, FromRequestBody: req.body });
   res.status(200).send("Method post succesfully");
 });
 
