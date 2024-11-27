@@ -1,7 +1,8 @@
-const response = (res, status, data) => {
-    return res.status(status).json({
-        status: status,
-        message: (status >= 400) ? "Error" : "Success",
+const response = (res, statusData, data) => {
+    console.log(statusData)
+    return res.status(statusData.status).json({
+        status: statusData.status,
+        message: statusData.message,
         response: {
             data: data
         }
