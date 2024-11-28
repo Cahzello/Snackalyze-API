@@ -1,4 +1,4 @@
-const handleRegister = () => {
+const handleRegister = (req, res) => {
     
 };
 

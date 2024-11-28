@@ -1,6 +1,9 @@
-const handleLogin = (req, result) => {
-  const { username, password } = req.body;
-  console.log(result);
+const { validationResult, matchedData } = require("express-validator");
+
+const handleLogin = (req) => {
+  const result = validationResult(req);
+  const { username, password } = matchedData(req);
+
   if (result.isEmpty()) {
     if (username === "cahzello" && password === "12345") {
       return {

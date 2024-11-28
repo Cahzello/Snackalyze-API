@@ -4,8 +4,11 @@ const port = 3000;
 const bodyParser = require("body-parser");
 const response = require("./skemaResponse");
 const handleLogin = require("./controller/login");
-const { body } = require("express-validator");
-const { validateLogin, validateResult } = require("./validation/login");
+const handleRegister = require("./controller/register");
+const {
+  validateLogin,
+  validateRegister,
+} = require("./validation/notEmptyEscape");
 
 app.use(bodyParser.json());
 
@@ -17,13 +20,19 @@ app.get("/login", (req, res) => {
   response(res, 200, "Halaman Login");
 });
 
+/**
+ * This fn checks the request body for the presence of username and password and sanitizes them.
+ * If it is present, it will return a 200 OK response with the message "Success".
+ * If it is not present, it will return a 400 Bad Request response with the message "Bad Request".
+ **/
 app.post("/login", validateLogin(["username", "password"]), (req, res) => {
-  const resultValidation = validateResult(req);
-  const data = handleLogin(req, resultValidation);
-  response(res, data, "");
+  const status = handleLogin(req);
+  const data = null;
+  response(res, status, data);
 });
 
-app.get("/register", (req, res) => {
+app.get("/register", validateRegister(["username", "password"]), (req, res) => {
+  handleRegister(req, res);
   response(res, 200, "Halaman register");
 });
 

@@ -1,7 +1,11 @@
 const { body, validationResult } = require("express-validator");
 
 const validateLogin = (validate) => {
- return body(validate).notEmpty().escape();
+  return body(validate).notEmpty().escape();
+};
+
+const validateRegister = (validate) => {
+  return body(validate).notEmpty().escape();
 };
 
 const validateResult = (req) => {
@@ -9,7 +13,7 @@ const validateResult = (req) => {
 };
 
 module.exports = {
-    validateLogin: validateLogin,
-    validateResult: validateResult
+  validateLogin,
+  validateRegister,
+  validateResult,
 };
-

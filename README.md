@@ -25,15 +25,20 @@ Empower your snacking journey with Snackalyze! 🍫📖
 ```
 git clone https://github.com/Cahzello/Snackalyze-API.git
 ```
-2. Install depedencies:
-```
-npm i
-```
-3. Move directory to project
+2. Move directory to project
 ```
 cd Snackalyze-API
 ```
-4. To run
+3. Install depedencies:
+```
+npm i
+```
+4. copy .env.example to .env in same directory:
+```
+cp .env.example .env
+```
+5. fill the credentials .env needed
+6. run the project
 ```
 npm run dev
 ```
