@@ -6,7 +6,7 @@ const handleRegister = (req, res) => {
   const token = req.get("Authorization");
 
   if (result.isEmpty()) {
-    const user = checkUser(username, password, token);
+    const user = registing(username, password, token);
     if (user) {
       return {
         status: 200,
