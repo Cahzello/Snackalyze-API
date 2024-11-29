@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "nodemon src/index.js",
+    "start": "node src/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -14,10 +15,10 @@
     "@prisma/client": "^5.22.0",
     "body-parser": "^1.20.3",
     "express": "^4.21.1",
-    "express-validator": "^7.2.0",
-    "nodemon": "^3.1.7"
+    "express-validator": "^7.2.0"
   },
   "devDependencies": {
+    "nodemon": "^3.1.7",
     "prisma": "^5.22.0"
   }
 }
