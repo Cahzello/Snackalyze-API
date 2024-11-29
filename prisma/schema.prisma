@@ -14,20 +14,20 @@ datasource db {
 }
 
 model User {
-  id          Int       @id @default(autoincrement())
-  email       String    @unique
-  username    String    @default("")
-  password    String    @default("")
-  created_at  DateTime  @default(now())
-  updated_at  DateTime  @updatedAt
-  Allergy     Allergy[]
+  id         Int       @id @default(autoincrement())
+  email      String    @unique
+  username   String    @default("")
+  password   String    @default("")
+  created_at DateTime  @default(now())
+  updated_at DateTime  @updatedAt
+  Allergy    Allergy[]
 }
 
 model Allergy {
-  id          Int      @id @default(autoincrement())
-  allergy     Json @default("{}")
-  created_at  DateTime @default(now())
-  updated_at  DateTime @updatedAt
-  user        User     @relation(fields: [user_id], references: [id])
-  user_id     Int
+  id         Int      @id @default(autoincrement())
+  allergy    Json     @default("{}")
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  user       User     @relation(fields: [user_id], references: [id])
+  user_id    Int
 }

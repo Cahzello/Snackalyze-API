@@ -1,29 +1,31 @@
-const { matcheddata, validationResult } = require("express-validator");
+const { matchedData, validationResult } = require("express-validator");
+const registing = require("../models/User");
 
-const handleRegister = (req, res) => {
+const handleRegister = async (req, res) => {
   const result = validationResult(req);
-  const { username, password } = matcheddata(req);
+  const { username, password } = matchedData(req);
   const token = req.get("Authorization");
 
-  if (result.isEmpty()) {
-    const user = registing(username, password, token);
-    if (user) {
-      return {
-        status: 200,
-        message: "Success",
-      };
-    } else {
-      return {
-        status: 401,
-        message: "Unauthorized",
-      };
-    }
-  } else {
-    return {
-      status: 400,
-      message: "Bad Request",
-    };
-  }
+  const user = await registing();
+  return user;
+  // if (result.isEmpty()) {
+  //   if (user) {
+  //     return {
+  //       status: 200,
+  //       message: "Success",
+  //     };
+  //   } else {
+  //     return {
+  //       status: 401,
+  //       message: "Unauthorized",
+  //     };
+  //   }
+  // } else {
+  //   return {
+  //     status: 400,
+  //     message: "Bad Request",
+  //   };
+  // }
 };
 
 module.exports = handleRegister;

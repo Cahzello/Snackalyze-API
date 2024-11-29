@@ -13,9 +13,9 @@ router.get("/", (req, res) => {
  * Handle registing new user
  * return a automatic redirect resonse to dashboard page
  */
-router.post("/", validateRegister(["username", "password"]), (req, res) => {
-  handleRegister(req, res);
-  response(res, {status: 200, message: "Success"}, "Halaman register");
+router.post("/", validateRegister(["username", "password"]), async (req, res) => {
+  const data = await handleRegister(req, res);
+  response(res, {status: 200, message: "Success"}, data);
 });
 
 module.exports = router;
