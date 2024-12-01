@@ -5,17 +5,11 @@ const handleLogin = (req) => {
   const { username, password } = matchedData(req);
 
   if (result.isEmpty()) {
-    if (username === "cahzello" && password === "12345") {
-      return {
-        status: 200,
-        message: "Success",
-      };
-    }
+    try {
 
-    return {
-      status: 401,
-      message: "Unauthorized",
-    };
+    } catch{
+      
+    }
   } else {
     return {
       status: 400,

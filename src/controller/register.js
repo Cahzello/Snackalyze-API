@@ -1,14 +1,18 @@
 const { matchedData, validationResult } = require("express-validator");
+const bcrypt = require("bcrypt");
 const { Prisma } = require("@prisma/client");
-const { registing, login } = require("../models/User");
+const { registing } = require("../models/User");
 
 const handleRegister = async (req, res) => {
   const result = validationResult(req);
   const { username, password, email } = matchedData(req);
+  const saltRounds = 10;
+
+  const hashPassword = await bcrypt.hash(password, saltRounds);
 
   const newUser = {
     username: username,
-    password: password,
+    password: hashPassword,
     email: email,
   };
 
@@ -20,7 +24,7 @@ const handleRegister = async (req, res) => {
         message: "Success",
         payload: {
           createUserStatus: true,
-          user: ''
+          user: "",
         },
       };
     } catch (err) {
