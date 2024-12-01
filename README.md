@@ -20,6 +20,7 @@ Empower your snacking journey with Snackalyze! 🍫📖
 ## Prerequisite
 - Git `2.40 or higher`
 - nodeJS `18.00 or higher`
+- SQL DB `Recommended using mysql`
 ## How to run
 1. Clone this repo:
 ```
@@ -37,8 +38,9 @@ npm i
 ```
 cp .env.example .env
 ```
-5. fill the credentials .env needed
-6. run the project
+5. create database. 'naming suggested: snackalyze'
+6. fill the credentials .env needed
+7. run the project
 ```
 npm run dev
 ```
