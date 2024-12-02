@@ -6,7 +6,7 @@ const handleLogin = require("../controller/login");
 const response  = require("../skemaResponse");
 
 router.get("/", (req, res) => {
-  response(res, 200, "Halaman Login");
+  response(res, {status: 200, message: "Success", payload: []}, "Halaman Login");
 });
 
 /**
@@ -15,9 +15,8 @@ router.get("/", (req, res) => {
  * If it is not present, it will return a 400 Bad Request response with the message "Bad Request".
  **/
 router.post("/", validateLogin(["username", "password"]), (req, res) => {
-  const status = handleLogin(req);
-  const data = null;
-  response(res, status, data);
+  const data = handleLogin(req);
+  response(res, data);
 });
 
 module.exports = router;

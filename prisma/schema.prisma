@@ -17,7 +17,7 @@ model User {
   id         Int       @id @default(autoincrement())
   email      String    @unique
   username   String    @default("")
-  password   String    @default("")
+  password   String    @db.VarChar(255)
   created_at DateTime  @default(now())
   updated_at DateTime  @updatedAt
   Allergy    Allergy[]

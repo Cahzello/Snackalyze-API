@@ -14,6 +14,7 @@ const handleLogin = (req) => {
     return {
       status: 400,
       message: "Bad Request",
+      payload: null,
     };
   }
 };
