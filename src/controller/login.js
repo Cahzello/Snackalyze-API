@@ -26,7 +26,7 @@ const handleLogin = async (req) => {
 
       const accessToken = createToken(userData);
       const refreshToken = jwt.sign(userData, process.env.REFERSH_TOKEN_SECRET);
-      updateRefreshToken(uesr.email, refreshToken);
+      updateRefreshToken(user.email, refreshToken);
 
       return {
         status: 200,
@@ -38,6 +38,7 @@ const handleLogin = async (req) => {
       };
     }
   } catch (err) {
+    console.log(err);
     return {
       status: 500,
       message: "Internal Server Error",
