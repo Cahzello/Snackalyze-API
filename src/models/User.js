@@ -13,9 +13,30 @@ const registing = async (newUser) => {
   return await prisma.User.create(user);
 };
 
-const login = async () => {
-  const users = await prisma.User.findMany();
+const findUser = async (email) => {
+  const users = await prisma.User.findUnique({
+    where: {
+      email: email,
+    },
+  });
   return users;
 };
 
-module.exports = { registing: registing, login: login };
+const updateRefreshToken = async (email, refreshToken) => {
+  const user = {
+    where: {
+      email: email,
+    },
+    data: {
+      refreshToken: refreshToken,
+    },
+  };
+
+  return await prisma.User.update(user);
+};
+
+module.exports = {
+  registing: registing,
+  findUser: findUser,
+  updateRefreshToken: updateRefreshToken,
+};

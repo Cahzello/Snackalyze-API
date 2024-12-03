@@ -14,8 +14,8 @@ router.get("/", (req, res) => {
  * If it is present, it will return a 200 OK response with the message "Success".
  * If it is not present, it will return a 400 Bad Request response with the message "Bad Request".
  **/
-router.post("/", validateLogin(["username", "password"]), (req, res) => {
-  const data = handleLogin(req);
+router.post("/", validateLogin(["email", "password"]), async (req, res) => {
+  const data = await handleLogin(req);
   response(res, data);
 });
 

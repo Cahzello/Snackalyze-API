@@ -5,8 +5,8 @@ const { registing } = require("../models/User");
 
 const handleRegister = async (req, res) => {
   const result = validationResult(req);
-  const { username, password, email } = matchedData(req);
-  const saltRounds = 10;
+  const { username, password, password2, email } = matchedData(req);
+  const saltRounds = await bcrypt.genSalt();
 
   const hashPassword = await bcrypt.hash(password, saltRounds);
 
@@ -16,43 +16,52 @@ const handleRegister = async (req, res) => {
     email: email,
   };
 
-  if (result.isEmpty()) {
-    try {
-      const user = await registing(newUser);
-      return {
-        status: 200,
-        message: "Success",
-        payload: {
-          createUserStatus: true,
-          user: "",
-        },
-      };
-    } catch (err) {
-      if (err instanceof Prisma.PrismaClientKnownRequestError) {
-        const formatErr = {
-          errorCode: err.code,
-          meta: err.meta,
-          clientVersion: err.clientVersion,
-        };
-        return {
-          status: 400,
-          message: "Bad Request",
-          payload: formatErr,
-        };
-      } else {
-        return {
-          status: 401,
-          message: "Unauthorized",
-          payload: null,
-        };
-      }
-    }
-  } else {
+  if (!result.isEmpty()) {
     return {
       status: 400,
       message: "Bad Request",
-      payload: result,
+      payload: [],
     };
+  }
+
+  if (password !== password2) {
+    return {
+      status: 400,
+      message: "Bad Request",
+      payload: {
+        errrMessage: "username and username2 must be same",
+      },
+    };
+  }
+
+  try {
+    await registing(newUser);
+    return {
+      status: 201,
+      message: "Success Created",
+      payload: {
+        createUserStatus: true,
+      },
+    };
+  } catch (err) {
+    if (err instanceof Prisma.PrismaClientKnownRequestError) {
+      const formatErr = {
+        errorCode: err.code,
+        meta: err.meta,
+        clientVersion: err.clientVersion,
+      };
+      return {
+        status: 400,
+        message: "Bad Request",
+        payload: formatErr,
+      };
+    } else {
+      return {
+        status: 401,
+        message: "Unauthorized",
+        payload: null,
+      };
+    }
   }
 };
 

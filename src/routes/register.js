@@ -11,7 +11,7 @@ router.get("/", (req, res) => {
 
 router.post(
   "/",
-  validateRegister(["username", "password", "email"]),
+  validateRegister(["username", "password2","password", "email"]),
   async (req, res) => {
     const data = await handleRegister(req, res);
     response(res, data);
