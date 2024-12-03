@@ -8,6 +8,7 @@ const registerRoute = require("./routes/register");
 
 const bodyParser = require("body-parser");
 const response = require("./skemaResponse");
+const authenticateToken = require("./middleware/Authorizatoin");
 
 app.use(bodyParser.json());
 app.use(logger);
@@ -23,7 +24,7 @@ app.get("/", (req, res) => {
   response(res, {status: 200, message: "Success"}, "Halaman Homepage");
 });
 
-app.get("/dashboard", (req, res) => {
+app.get("/dashboard", authenticateToken, (req, res) => {
   response(res, 200, "Halaman Dashboard");
 });
 
