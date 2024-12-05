@@ -8,7 +8,7 @@ const registerRoute = require("./routes/register");
 
 const bodyParser = require("body-parser");
 const response = require("./skemaResponse");
-const authenticateToken = require("./middleware/Authorizatoin");
+const { authenticateToken, refreshToken } = require("./middleware/Authorizatoin");
 
 app.use(bodyParser.json());
 app.use(logger);
@@ -21,15 +21,19 @@ function logger(req, res, next) {
 }
 
 app.get("/", (req, res) => {
-  response(res, {status: 200, message: "Success"}, "Halaman Homepage");
+  response(res, { status: 200, message: "Success" }, "Halaman Homepage");
 });
 
 app.get("/dashboard", authenticateToken, (req, res) => {
-  response(res, 200, "Halaman Dashboard");
+  response(res, { status: 200, message: "Success"});
 });
 
 app.get("/dashboard/profile", (req, res) => {
   response(res, 200, "Halaman Profile");
+});
+
+app.post("/token", (req, res) => {
+  refreshToken(req, res);
 });
 
 app.listen(port, () => {

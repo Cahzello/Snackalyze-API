@@ -19,6 +19,7 @@ model User {
   username     String    @default("")
   password     String    @db.VarChar(255)
   refreshToken String?   @db.VarChar(255)
+  accessToken  String?   @db.VarChar(255)
   created_at   DateTime  @default(now())
   updated_at   DateTime  @updatedAt
   Allergy      Allergy[]

@@ -2,6 +2,7 @@ const { validationResult, matchedData } = require("express-validator");
 const jwt = require("jsonwebtoken");
 const { findUser, updateRefreshToken } = require("../models/User");
 const { compare } = require("bcrypt");
+const { createToken } = require("../middleware/Authorizatoin");
 
 const handleLogin = async (req) => {
   const result = validationResult(req);
@@ -20,6 +21,7 @@ const handleLogin = async (req) => {
     const isMatch = await compare(password, user.password);
     if (isMatch) {
       const userData = {
+        id: user.id,
         username: user.username,
         email: user.email,
       };
@@ -36,6 +38,14 @@ const handleLogin = async (req) => {
           refreshToken: refreshToken,
         },
       };
+    } else {
+      return {
+        message: "Bad Request",
+        status: 400,
+        payload: {
+          errMessage: "email or password must be correct",
+        },
+      };
     }
   } catch (err) {
     console.log(err);
@@ -45,12 +55,6 @@ const handleLogin = async (req) => {
       payload: null,
     };
   }
-};
-
-const createToken = (payload) => {
-  return jwt.sign(payload, process.env.ACCESS_TOKEN_SECRET, {
-    expiresIn: "15m",
-  });
 };
 
 module.exports = handleLogin;

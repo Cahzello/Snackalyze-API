@@ -3,7 +3,7 @@ const response = (res, data) => {
     status: data.status,
     message: data.message,
     response: {
-      payload: data.payload,
+      payload: data?.payload,
     },
   });
 };
