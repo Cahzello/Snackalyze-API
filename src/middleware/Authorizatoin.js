@@ -15,7 +15,6 @@ const authenticateToken = (req, res, next) => {
       message: "no token found in auth request header",
     });
   }
-  // console.log(jwt.verify(token, process.env.REFRESH_TOKEN_SECRET));
 
   jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, async (err, user) => {
     const userIsExist = await findUser(user?.email);
@@ -57,9 +56,9 @@ const refreshToken = async (req, res) => {
   }
 
   const payload = {
-    id: user[0].id,
-    username: user[0].username,
-    email: user[0].email,
+    id: user.id,
+    username: user.username,
+    email: user.email,
   };
 
   jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, (err) => {
