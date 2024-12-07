@@ -1,6 +1,6 @@
 const { validationResult, matchedData } = require("express-validator");
 const jwt = require("jsonwebtoken");
-const { findUser, updateRefreshToken } = require("../models/User");
+const { findUser, addRefreshToken } = require("../models/User");
 const { compare } = require("bcrypt");
 const { createToken } = require("../middleware/Authorizatoin");
 
@@ -16,8 +16,15 @@ const handleLogin = async (req) => {
     };
   }
 
+  const user = await findUser(email);
+  if (user == null) {
+    return {
+      status: 400,
+      message: "email or password must be correct",
+    };
+  }
+
   try {
-    const user = await findUser(email);
     const isMatch = await compare(password, user.password);
     if (isMatch) {
       const userData = {
@@ -27,8 +34,8 @@ const handleLogin = async (req) => {
       };
 
       const accessToken = createToken(userData);
-      const refreshToken = jwt.sign(userData, process.env.REFERSH_TOKEN_SECRET);
-      updateRefreshToken(user.email, refreshToken);
+      const refreshToken = jwt.sign(userData, process.env.REFRESH_TOKEN_SECRET);
+      addRefreshToken(user.email, refreshToken);
 
       return {
         status: 200,
@@ -40,11 +47,8 @@ const handleLogin = async (req) => {
       };
     } else {
       return {
-        message: "Bad Request",
+        message: "email or password must be correct",
         status: 400,
-        payload: {
-          errMessage: "email or password must be correct",
-        },
       };
     }
   } catch (err) {
@@ -52,7 +56,6 @@ const handleLogin = async (req) => {
     return {
       status: 500,
       message: "Internal Server Error",
-      payload: null,
     };
   }
 };

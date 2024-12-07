@@ -22,7 +22,7 @@ const findUser = async (email) => {
   return users;
 };
 
-const updateRefreshToken = async (email, refreshToken) => {
+const addRefreshToken = async (email, refreshToken) => {
   const user = {
     where: {
       email: email,
@@ -36,9 +36,21 @@ const updateRefreshToken = async (email, refreshToken) => {
 };
 
 const searchRefreshToken = async (refreshToken) => {
-  const user = await prisma.User.findMany({
+  const user = await prisma.User.findFirst({
     where: {
       refreshToken: refreshToken,
+    },
+  });
+  return user;
+};
+
+const deleteRefreshToken = async (id) => {
+  const user = await prisma.User.update({
+    where: {
+      id: id,
+    },
+    data: {
+      refreshToken: null,
     },
   });
   return user;
@@ -47,6 +59,7 @@ const searchRefreshToken = async (refreshToken) => {
 module.exports = {
   registing: registing,
   findUser: findUser,
-  updateRefreshToken: updateRefreshToken,
-  searchRefreshToken: searchRefreshToken
+  addRefreshToken: addRefreshToken,
+  searchRefreshToken: searchRefreshToken,
+  deleteRefreshToken: deleteRefreshToken
 };
