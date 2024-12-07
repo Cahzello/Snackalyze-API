@@ -15,12 +15,20 @@ const authenticateToken = (req, res, next) => {
       message: "no token found in auth request header",
     });
   }
+  // console.log(jwt.verify(token, process.env.REFRESH_TOKEN_SECRET));
 
-  jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
-    if (!findUser(user?.email)) {
+  jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, async (err, user) => {
+    const userIsExist = await findUser(user?.email);
+    if (!userIsExist) {
       return response(res, {
         status: 403,
         message: "user not exist",
+      });
+    }
+    if (!userIsExist.refreshToken) {
+      return response(res, {
+        status: 403,
+        message: "unauthorized",
       });
     }
     if (err)
@@ -43,7 +51,7 @@ const refreshToken = async (req, res) => {
     });
   }
 
-  const user = await searchRefreshToken(refreshToken);
+  const user = (await searchRefreshToken(refreshToken)) ?? "";
   if (user.length === 0) {
     return response(res, { status: 403, message: "user has been logged out" });
   }
@@ -65,7 +73,7 @@ const refreshToken = async (req, res) => {
 };
 
 const logout = async (refreshToken, res) => {
-  const user = await searchRefreshToken(refreshToken) ?? '';
+  const user = (await searchRefreshToken(refreshToken)) ?? "";
   try {
     jwt.verify(
       user.refreshToken,
@@ -75,7 +83,7 @@ const logout = async (refreshToken, res) => {
           response(res, { status: 403, message: "invalid refresh token" });
         } else {
           await deleteRefreshToken(decoded.id);
-          response(res, { status: 200, message: "success logout" });
+          response(res, { status: 204, message: "success logout" });
         }
       }
     );

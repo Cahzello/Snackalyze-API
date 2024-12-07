@@ -40,7 +40,7 @@ app.post("/token", (req, res) => {
   refreshToken(req, res);
 });
 
-app.post("/logout", async (req, res) => {
+app.delete("/logout", async (req, res) => {
   await logout(req.body.token, res);
 });
 
