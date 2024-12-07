@@ -82,7 +82,7 @@ const logout = async (refreshToken, res) => {
           response(res, { status: 403, message: "invalid refresh token" });
         } else {
           await deleteRefreshToken(decoded.id);
-          response(res, { status: 204, message: "success logout" });
+          response(res, { status: 200, message: "success logout" });
         }
       }
     );
