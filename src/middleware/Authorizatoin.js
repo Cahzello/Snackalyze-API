@@ -50,9 +50,9 @@ const refreshToken = async (req, res) => {
     });
   }
 
-  const user = (await searchRefreshToken(refreshToken)) ?? "";
-  if (user.length === 0) {
-    return response(res, { status: 403, message: "user has been logged out" });
+  const user = (await searchRefreshToken(refreshToken)) ?? null;
+  if (!user) {
+    return response(res, { status: 403, message: "cannot make refresh token. user is logged out"});
   }
 
   const payload = {
