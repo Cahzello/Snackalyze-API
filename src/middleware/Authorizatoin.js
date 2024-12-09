@@ -66,7 +66,7 @@ const refreshToken = async (req, res) => {
       response(res, { status: 403, message: "invalid refresh token" });
     } else {
       const accessToken = createToken(payload);
-      res.status(200).json({ accessToken: accessToken });
+      response(res, { status: 200, message: "success refresh token", payload: { accessToken: accessToken } });
     }
   });
 };

@@ -6,7 +6,7 @@ const handleLogin = require("../controller/login");
 const response  = require("../skemaResponse");
 
 router.get("/", (req, res) => {
-  response(res, {status: 200, message: "Success", payload: []}, "Halaman Login");
+  response(res, {status: 200, message: "Success", payload: []});
 });
 
 /**
