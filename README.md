@@ -76,7 +76,8 @@ Nilai __Response__
 `POST /login`
 
 Endpoint untuk mengirimkan data login. 
-Nilai request:
+
+Nilai __Request__:
 ```
 {
 	"email": email,
@@ -84,7 +85,7 @@ Nilai request:
 } 
 ```
 
-Nilai kembalian:
+Nilai __Response__:
 ```
 {
     status: 200,
@@ -110,7 +111,7 @@ Nilai __Request__:
 ```
 > __Warning__: `email`harus __unique__
 
-Nilai __Kembalian__:
+Nilai __Response__:
 ```
 {
     "status": 201,
@@ -134,7 +135,7 @@ Nilai header __Request__:
 }
 ```
 
-Nilai __Kembalian__:
+Nilai __Response__:
 ```
 {
     "status": 200,
@@ -154,7 +155,7 @@ Nilai __Request__:
 }
 ```
 
-Nilai __Kembalian__:
+Nilai __Response__:
 ```
 {
     "status": 200,
@@ -174,7 +175,7 @@ Nilai __Reqeust__:
 }
 ```
 
-Nilai __Kembalian__:
+Nilai __Response__:
 ```
 {
     "status": 200,
