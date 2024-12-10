@@ -52,13 +52,19 @@ cp .env.example .env
 
 5. create database. 'naming suggested: snackalyze'
 6. fill the credentials .env needed
-7. run the project
+7. crete databse structure by running prisma: 
+```
+npx prisma db push
+```
+8. run the project
 
 ```
 npm run dev
 ```
 
 ## Documentation
+
+> __Perhatian!!__: Semua request dibawah ini menggunakan request body!!
 
 `GET /`
 
