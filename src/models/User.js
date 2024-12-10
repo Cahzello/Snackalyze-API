@@ -56,10 +56,24 @@ const deleteRefreshToken = async (id) => {
   return user;
 };
 
+const updateUserData = async (id, data) => {
+  const user = await prisma.User.update({
+    where: {
+      id: id,
+    },
+    data: {
+      username: data.username,
+      email: data.email,
+    },
+  });
+  return user;
+};
+
 module.exports = {
   registing: registing,
   findUser: findUser,
   addRefreshToken: addRefreshToken,
   searchRefreshToken: searchRefreshToken,
-  deleteRefreshToken: deleteRefreshToken
+  deleteRefreshToken: deleteRefreshToken,
+  updateUserData: updateUserData,
 };

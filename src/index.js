@@ -6,6 +6,7 @@ const port = process.env.PORT;
 const loginRoute = require("./routes/login");
 const registerRoute = require("./routes/register");
 const dashboardRoute = require("./routes/dashboard");
+const profileRoute = require("./routes/profile");
 
 const bodyParser = require("body-parser");
 const response = require("./skemaResponse");
@@ -16,6 +17,8 @@ app.use(logger);
 app.use("/login", loginRoute);
 app.use("/register", registerRoute);
 app.use("/dashboard", dashboardRoute);
+app.use("/profile", profileRoute);
+
 
 function logger(req, res, next) {
   console.log(`[${new Date().toLocaleString()}] - ${req.method} ${req.path}`);
