@@ -109,7 +109,7 @@ Nilai __Request__:
     "email": email
 }
 ```
-> __Warning__: `email`harus __unique__
+> __Warning__: `email` harus __unique__
 
 Nilai __Response__:
 ```

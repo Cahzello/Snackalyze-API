@@ -5,6 +5,7 @@ const port = process.env.PORT;
 
 const loginRoute = require("./routes/login");
 const registerRoute = require("./routes/register");
+const dashboard = require('./controller/dashboard');
 
 const bodyParser = require("body-parser");
 const response = require("./skemaResponse");
@@ -28,8 +29,9 @@ app.get("/", (req, res) => {
   response(res, { status: 200, message: "Success" }, "Halaman Homepage");
 });
 
-app.get("/dashboard", authenticateToken, (req, res) => {
-  response(res, { status: 200, message: "Success" });
+app.get("/dashboard", authenticateToken, async (req, res) => {
+  const data = await dashboard();
+  response(res, { status: 200, message: "Success", payload: data });
 });
 
 app.get("/dashboard/profile", (req, res) => {

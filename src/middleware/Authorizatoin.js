@@ -52,7 +52,10 @@ const refreshToken = async (req, res) => {
 
   const user = (await searchRefreshToken(refreshToken)) ?? null;
   if (!user) {
-    return response(res, { status: 403, message: "cannot make refresh token. user is logged out"});
+    return response(res, {
+      status: 403,
+      message: "cannot make refresh token. user is logged out",
+    });
   }
 
   const payload = {
@@ -66,13 +69,22 @@ const refreshToken = async (req, res) => {
       response(res, { status: 403, message: "invalid refresh token" });
     } else {
       const accessToken = createToken(payload);
-      response(res, { status: 200, message: "success refresh token", payload: { accessToken: accessToken } });
+      response(res, {
+        status: 200,
+        message: "success refresh token",
+        payload: { accessToken: accessToken },
+      });
     }
   });
 };
 
 const logout = async (refreshToken, res) => {
+  refreshToken ?? null;
+  if (refreshToken == null) {
+    return response(res, { status: 400, message: "no token found in request body" });
+  }
   const user = (await searchRefreshToken(refreshToken)) ?? "";
+  console.log(user);
   try {
     jwt.verify(
       user.refreshToken,
