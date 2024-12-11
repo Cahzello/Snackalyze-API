@@ -18,13 +18,13 @@ const readAllergyAllUsers = async () => {
   return allergy;
 };
 
-const insertAllergy = async (id, allergyData) => {
+const upsertAllergy = async (id, allergyData) => {
   return await prisma.Allergy.upsert({
-    where: {
+      where: {
       user_id: id,
     },
     create: {
-      allergy: { data: [`${allergyData}`] },
+      allergy: { data: allergyData},
     },
     update: {
       allergy: { data: 'test'},
@@ -34,6 +34,6 @@ const insertAllergy = async (id, allergyData) => {
 
 module.exports = {
   readAllergy: readAllergy,
-  insertAllergy: insertAllergy,
+  upsertAllergy: upsertAllergy,
   readAllergyAllUsers: readAllergyAllUsers
 };

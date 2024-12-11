@@ -27,6 +27,18 @@ const findUserById = async (id) => {
     where: {
       id: id,
     },
+    select: {
+      id: true,
+      email: true,
+      username: true,
+      Allergy: {
+        select: {
+          id: true,
+          user_id: true,
+          allergy: true,
+        },
+      },
+    },
   });
   return users;
 };
@@ -87,4 +99,3 @@ module.exports = {
   updateUserData: updateUserData,
   findUserById: findUserById,
 };
-

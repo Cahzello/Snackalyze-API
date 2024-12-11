@@ -1,22 +1,58 @@
+
+const { readAllergy, upsertAllergy } = require("../models/Allergy");
 const { findUserById } = require("../models/User");
 
 const getDataUser = async (req, res) => {
   try {
     if (req.user.id !== parseInt(req.params.id)) {
-      return res, { status: 403, message: "Forbidden" };
+      return { status: 403, message: "Forbidden" };
     }
 
-    const { id, username, email, created_at } = await findUserById(
+    const dataUser = await findUserById(
       parseInt(req.params.id)
     );
 
-    const jsonData = { id, username, email, created_at };
-
-    return { status: 200, message: "Success", payload: jsonData };
+    return { status: 200, message: "Success", payload: dataUser };
   } catch (err) {
     console.log(err);
-    return res, { status: 404, message: "Data not found" };
+    return { status: 404, message: "Data not found" };
   }
 };
 
-module.exports = getDataUser;
+const getAllergy = async (req, res) => {
+  try {
+    if (req.user.id !== parseInt(req.params.id)) {
+      return { status: 403, message: "Forbidden" };
+    }
+
+    const data = await readAllergy(req.user.id);
+    return { status: 200, message: "Success", payload: data };
+  } catch (err) {
+    console.log(err);
+    return { status: 500, message: "Internal Server Error" };
+  }
+};
+
+const insertOrUpdateAllergy = async (req) => {
+  try {
+    if (req.user.id !== parseInt(req.params.id)) {
+      return { status: 403, message: "Forbidden" };
+    }
+
+    const dataAllergy = await upsertAllergy(req.user.id, req.body.allergy);
+    return {
+      status: 201,
+      message: "Success",
+      payload: dataAllergy,
+    };
+  } catch (err) {
+    console.log(err);
+    return { status: 500, message: "Internal Server Error" };
+  }
+};
+
+module.exports = {
+  getDataUser: getDataUser,
+  insertOrUpdateAllergy: insertOrUpdateAllergy,
+  getAllergy: getAllergy,
+};
