@@ -22,6 +22,15 @@ const findUser = async (email) => {
   return users;
 };
 
+const findUserById = async (id) => {
+  const users = await prisma.User.findUnique({
+    where: {
+      id: id,
+    },
+  });
+  return users;
+};
+
 const addRefreshToken = async (email, refreshToken) => {
   const user = {
     where: {
@@ -76,4 +85,6 @@ module.exports = {
   searchRefreshToken: searchRefreshToken,
   deleteRefreshToken: deleteRefreshToken,
   updateUserData: updateUserData,
+  findUserById: findUserById,
 };
+

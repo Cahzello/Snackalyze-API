@@ -2,7 +2,8 @@ const express = require("express");
 const router = express.Router();
 const { authenticateToken } = require("../middleware/Authorizatoin");
 const response = require("../skemaResponse");
-const { findUser, updateUserData } = require("../models/User");
+const { updateUserData } = require("../models/User");
+const getDataUser = require("../controller/profile");
 
 router.get("/", authenticateToken, async (req, res) => {
   response(res, {
@@ -15,9 +16,8 @@ router.get("/", authenticateToken, async (req, res) => {
 });
 
 router.get("/:id", authenticateToken, async (req, res) => {
-  const { id, username, email, created_at } = await findUser(req.params.id);
-  const jsonData = { id, username, email, created_at };
-  response(res, { status: 200, message: "Success", payload: jsonData });
+  const data = await getDataUser(req, res);
+  response(res, data);
 });
 
 router.put("/:id", authenticateToken, async (req, res) => {

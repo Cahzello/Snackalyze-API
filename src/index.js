@@ -19,9 +19,8 @@ app.use("/register", registerRoute);
 app.use("/dashboard", dashboardRoute);
 app.use("/profile", profileRoute);
 
-
 function logger(req, res, next) {
-  console.log(`[${new Date().toLocaleString()}] - ${req.method} ${req.path}`);
+  console.log(`[${new Date().toString()}] - ${req.method} ${req.path}`);
   next();
 }
 
