@@ -1,6 +1,5 @@
 const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
-const { findUserById } = require("./User");
 
 const readAllergy = async (id) => {
   const allergy = await prisma.User.findUnique({

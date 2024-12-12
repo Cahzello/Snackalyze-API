@@ -52,10 +52,12 @@ cp .env.example .env
 
 5. create database. 'naming suggested: snackalyze'
 6. fill the credentials .env needed
-7. crete databse structure by running prisma: 
+7. crete databse structure by running prisma:
+
 ```
 npx prisma db push
 ```
+
 8. run the project
 
 ```
@@ -64,13 +66,14 @@ npm run dev
 
 ## Documentation
 
-> __Perhatian!!__: Semua request dibawah ini menggunakan request body!!
+> **Perhatian!!**: Semua request dibawah ini menggunakan request body!!
 
 `GET /`
 
 Endpoint GET home
 
-Nilai __Response__
+Nilai **Response**
+
 ```
 {
     "status": 200,
@@ -81,17 +84,19 @@ Nilai __Response__
 
 `POST /login`
 
-Endpoint untuk mengirimkan data login. 
+Endpoint untuk mengirimkan data login.
 
-Nilai __Request__:
+Nilai **Request**:
+
 ```
 {
 	"email": email,
     "password": password
-} 
+}
 ```
 
-Nilai __Response__:
+Nilai **Response**:
+
 ```
 {
     status: 200,
@@ -106,7 +111,8 @@ Nilai __Response__:
 `POST /register`
 
 Endpoint untuk mendaftarkan user.
-Nilai __Request__:
+Nilai **Request**:
+
 ```
 {
     "username": username,
@@ -115,9 +121,11 @@ Nilai __Request__:
     "email": email
 }
 ```
-> __Warning__: `email` harus __unique__
 
-Nilai __Response__:
+> **Warning**: `email` harus **unique**
+
+Nilai **Response**:
+
 ```
 {
     "status": 201,
@@ -134,14 +142,16 @@ Nilai __Response__:
 
 Endpoint untuk mengambil data dari halaman dashboard
 
-Nilai header __Request__:
+Nilai header **Request**:
+
 ```
 {
     "Authorization": Bearer token
 }
 ```
 
-Nilai __Response__:
+Nilai **Response**:
+
 ```
 {
     "status": 200,
@@ -154,14 +164,16 @@ Nilai __Response__:
 
 Endpoint untuk melogoutkan user.
 
-Nilai __Request__:
+Nilai **Request**:
+
 ```
 {
     "token": refreshToken
 }
 ```
 
-Nilai __Response__:
+Nilai **Response**:
+
 ```
 {
     "status": 200,
@@ -174,14 +186,16 @@ Nilai __Response__:
 
 Endpoint untuk merefresh token `refreshToken`.
 
-Nilai __Reqeust__:
+Nilai **Reqeust**:
+
 ```
 {
     "token": refreshToken
 }
 ```
 
-Nilai __Response__:
+Nilai **Response**:
+
 ```
 {
     "status": 200,
@@ -194,5 +208,153 @@ Nilai __Response__:
 }
 ```
 
+`GET /profile/:id`
+
+Endpoint untuk mendapatkan data user
+
+Nilai **Request** header:
+
+```
+bearer token
+```
+
+Nilai **Response** body:
+
+```
+{
+    "status": 200,
+    "message": "Success",
+    "response": {
+        "payload": {
+            "id": id,
+            "email": email,
+            "username": username,
+            "Allergy": [
+                {
+                    "id": id,
+                    "user_id": userId,
+                    "allergy": {
+                        "data": [
+                            Array of string
+                        ]
+                    }
+                }
+            ]
+        }
+    }
+}
+```
+
+`POST /profile/:id`
+
+Endpoint untuk meupdate data user, email dan username
+
+Nilai **Request** header:
+
+```
+bearer token
+```
+
+Nilai **Request** body:
+
+```
+{
+    "username": username,
+    "email": email
+}
+```
+
+Nilai **Response** body:
+
+```
+{
+    "status": 200,
+    "message": "Success updated",
+    "response": {
+        "payload": {
+            "id": id,
+            "email": email,
+            "username": usernmae,
+            "password": password,
+            "refreshToken": refreshToken,
+            "accessToken": accessToken,
+            "created_at": Date,
+            "updated_at": Date
+        }
+    }
+}
+```
+
+`GET /profile/allergy/:id`
+
+Endpoint untuk mendapatkan list allergy
+
+Nilai **Request** header:
+
+```
+bearer token
+```
+
+Nilai **Response** body:
+
+```
+{
+    "status": 201,
+    "message": "Success",
+    "response": {
+        "payload": {
+            "id": id,
+            "allergy": {
+                "data": [
+                    Array of String
+                ]
+            },
+            "created_at": Date,
+            "updated_at": Date,
+            "user_id": userID
+        }
+    }
+}
+```
+
+`POST /profile/allergy/:id`
+
+Endpoint untuk mendapatkan list allergy
+
+Nilai **Request** header:
+
+```
+bearer token
+```
+
+Nilai **Request** body:
+
+```
+{
+    "allergy": [ Array of string ]
+}
+```
+
+Nilai **Response** body:
+
+```
+{
+    "status": 201,
+    "message": "Success",
+    "response": {
+        "payload": {
+            "id": id,
+            "allergy": {
+                "data": [
+                    Array of String
+                ]
+            },
+            "created_at": Date,
+            "updated_at": Date,
+            "user_id": userID
+        }
+    }
+}
+```
 
 ## Enjoy our APP!
