@@ -2,6 +2,7 @@ const { matchedData, validationResult } = require("express-validator");
 const bcrypt = require("bcrypt");
 const { Prisma } = require("@prisma/client");
 const { registing } = require("../models/User");
+const { createAllergy } = require("../models/Allergy");
 
 const handleRegister = async (req, res) => {
   const result = validationResult(req);
@@ -35,7 +36,8 @@ const handleRegister = async (req, res) => {
   }
 
   try {
-    await registing(newUser);
+    const user = await registing(newUser);
+    await createAllergy(user.id, []);
     return {
       status: 201,
       message: "Success Created",

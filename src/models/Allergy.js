@@ -1,14 +1,15 @@
 const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
+const { findUserById } = require("./User");
 
 const readAllergy = async (id) => {
   const allergy = await prisma.User.findUnique({
     where: {
-      id: id
+      id: id,
     },
-    select:{
-      Allergy: true
-    }
+    select: {
+      Allergy: true,
+    },
   });
   return allergy;
 };
@@ -18,22 +19,34 @@ const readAllergyAllUsers = async () => {
   return allergy;
 };
 
-const upsertAllergy = async (id, allergyData) => {
-  return await prisma.Allergy.upsert({
-      where: {
+const createAllergy = async (id, allergyData) => {
+  const allergy = await prisma.Allergy.create({
+    data: {
       user_id: id,
-    },
-    create: {
-      allergy: { data: allergyData},
-    },
-    update: {
-      allergy: { data: 'test'},
+      allergy: { data: allergyData },
     },
   });
+  return allergy;
+};
+
+const updateAllergy = async (id, allergyData) => {
+  const allergy = await prisma.Allergy.update({
+    where: {
+      user: {
+        id: id,
+      },
+      user_id: id,
+    },
+    data: {
+      allergy: { data: allergyData },
+    },
+  });
+  return allergy;
 };
 
 module.exports = {
   readAllergy: readAllergy,
-  upsertAllergy: upsertAllergy,
-  readAllergyAllUsers: readAllergyAllUsers
+  readAllergyAllUsers: readAllergyAllUsers,
+  createAllergy: createAllergy,
+  updateAllergy: updateAllergy, 
 };

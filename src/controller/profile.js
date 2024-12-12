@@ -1,5 +1,4 @@
-
-const { readAllergy, upsertAllergy } = require("../models/Allergy");
+const { readAllergy, updateAllergy } = require("../models/Allergy");
 const { findUserById } = require("../models/User");
 
 const getDataUser = async (req, res) => {
@@ -8,9 +7,7 @@ const getDataUser = async (req, res) => {
       return { status: 403, message: "Forbidden" };
     }
 
-    const dataUser = await findUserById(
-      parseInt(req.params.id)
-    );
+    const dataUser = await findUserById(parseInt(req.params.id));
 
     return { status: 200, message: "Success", payload: dataUser };
   } catch (err) {
@@ -33,13 +30,12 @@ const getAllergy = async (req, res) => {
   }
 };
 
-const insertOrUpdateAllergy = async (req) => {
+const updateAllergyController = async (req) => {
   try {
     if (req.user.id !== parseInt(req.params.id)) {
       return { status: 403, message: "Forbidden" };
     }
-
-    const dataAllergy = await upsertAllergy(req.user.id, req.body.allergy);
+    const dataAllergy = await updateAllergy(req.user.id, req.body.allergy);
     return {
       status: 201,
       message: "Success",
@@ -53,6 +49,6 @@ const insertOrUpdateAllergy = async (req) => {
 
 module.exports = {
   getDataUser: getDataUser,
-  insertOrUpdateAllergy: insertOrUpdateAllergy,
   getAllergy: getAllergy,
+  updateAllergyController: updateAllergyController,
 };
