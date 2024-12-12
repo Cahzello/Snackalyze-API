@@ -2,9 +2,7 @@ const express = require("express");
 const router = express.Router();
 const { authenticateToken } = require("../middleware/Authorizatoin");
 const response = require("../skemaResponse");
-const { updateUserData } = require("../models/User");
-const {getDataUser, updateAllergyController} = require("../controller/profile");
-const { upsertAllergy } = require("../models/Allergy");
+const {getDataUser, updateUser, updateAllergyController} = require("../controller/profile");
 
 router.get("/", authenticateToken, async (req, res) => {
   response(res, {
@@ -18,6 +16,11 @@ router.get("/", authenticateToken, async (req, res) => {
 
 router.get("/:id", authenticateToken, async (req, res) => {
   const data = await getDataUser(req, res);
+  response(res, data);
+});
+
+router.post("/:id", authenticateToken, async (req, res) => {
+  const data = await updateUser(req);
   response(res, data);
 });
 
